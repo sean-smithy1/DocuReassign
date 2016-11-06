@@ -18,11 +18,9 @@ module DocuReassign
     exit
   end
 
-
   me=DSGet.new
-  me.login
-  puts me.response
-
-
+  me.env_status('99f7d0f1-74e5-4ef8-8e10-deee58ce33ce')
+  #me.folders
+  puts JSON.pretty_generate(me.response)  
 
 end
