@@ -1,9 +1,0 @@
-test_ds:
-    account_id: '72de1146-52e1-4375-ab33-9bda60bd059d' #(Basha)
-    #@account_id='c988d19f-fa7c-4fbf-999e-432f717c99d9' #(Sean)
-    #@account_id='c988d19f-fa7c-4fbf-999e-432f717c99d9' #(DocWorkflow)
-    url: 'https://demo.docusign.net/restapi/v2'
-    username: 'debasish.harshavardhan.das@outlook.com'
-    password: 'Password1'
-    integratorkey: 'DEBA-55a5b90b-c2e0-4943-b7ad-b098891505eb'
-
