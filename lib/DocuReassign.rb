@@ -7,19 +7,21 @@ module DocuReassign
   require 'json'
   require 'openssl'
   require 'open-uri'
+  require 'yaml'
 
   require_relative 'DocuReassign/DSGet'
   require_relative 'DocuReassign/utils'
 
   Utils.clear
+  args = YAML.load_file('config/config.yaml')
 
   if Utils.internet? == false
     puts "Internet is required"
     exit
   end
 
-  me=DSGet.new
-  me.env_status('99f7d0f1-74e5-4ef8-8e10-deee58ce33ce')
+  me=DSGet.new(args)
+  me.envelopes
   #me.folders
   puts JSON.pretty_generate(me.response)  
 
