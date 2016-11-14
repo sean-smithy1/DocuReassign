@@ -10,6 +10,11 @@ Gem::Specification.new do |spec|
   spec.homepage    = 'http://rubygems.org/gems/DocReassign'
   spec.license       = 'MIT'
   spec.add_runtime_dependency 'mysql2', '~>3.1.0'
+  spec.add_runtime_dependency 'net/http', ''
+  spec.add_runtime_dependency 'json', ''
+  spec.add_runtime_dependency 'openssl', ''
+  spec.add_runtime_dependency 'open-uri', ''
+  spec.add_runtime_dependency 'yaml', ''
   spec.add_development_dependency 'rspec', '~> 2.14.1'
   spec.require_paths = ["lib"]
 end
