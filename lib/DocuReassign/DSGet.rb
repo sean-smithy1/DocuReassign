@@ -35,7 +35,7 @@ attr_accessor :response
     ds_get("/accounts/#{@account_id}/folders")
   end
 
-  def envelopes
+  def env_sent
     query = [['from_date', '2016-06-01+12:00'], ['status', 'sent']]
     ds_get("/envelopes", query)
   end
@@ -44,8 +44,15 @@ attr_accessor :response
     ds_put("/folders/#{folder_id}")
   end
 
-  def link(api_ref)
-    ds_get(api_ref)
+  def env_recipients(recipientsUri, email_to_find)
+    #returns a hash of hashes of recipients for an envelope by email that are in sent or opened
+    reciepients = ds_get(recipientsUri)
+
+    reciepients[:signers].keep_if do |k, v| k[:email] == email_to_find &&
+      k[:status] == 'sent' ||
+      k[:status] == 'delivered' ||
+      k[:status] == 'created'
+    end
   end
 
 private

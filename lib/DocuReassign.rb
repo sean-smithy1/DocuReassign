@@ -20,35 +20,31 @@ module DocuReassign
     exit
   end
 
+  # Envelopes with a particular user    
+  envelopes_pending_signer = Hash.new
+  email_to_find="anjanasathyan7955@gmail.com"
+
   env=DSGet.new(args)
-  env.envelopes
-  count = 0
-  env.response[:envelopes].each { |env|
-    count += 1
-    puts env[:envelopeId]
-    rec = DSGet.new(args)
-    rec.link(env[:recipientsUri])
-    rec.response[:signers].each { |signer|
-    string = "\t#{signer[:name]}, #{signer[:status]}"
-    
-    if signer[:status] == 'sent'
-      puts string + " *\n"
-    else
-      puts string + "\n"
+  env.env_sent # All DS Envelopes with Sent Status
+  
+  env.response[:envelopes].each do |envelope|
+    puts envelope[:envelopeId]
+  
+    rec=DSGet.new(args)
+    # Get envelopes that have the receipient in question and routing order etc.
+    # build a hash {envid:{rec_detail},envid:{rec_detail}}
+    valid_rec = rec.env_recipients(envelope[:recipientsUri], email_to_find)
+    envelopes_pending_signer[envelope[:envelopeId].to_sym]={}
+    if valid_rec
+      valid_rec.each do |element|
+        envelopes_pending_signer[envelope[:envelopeId].to_sym].merge!({ 
+          :recipientId => element[:recipientId], 
+          :recipientIdGuid => element[:recipientId], 
+          :routingOrder => element[:routingOrder] 
+          })
+      end
     end
-    }
-    puts "\n"
-  }
-  puts "\n#{count.to_s} Envelopes Returned\n" 
-
-
-env=nil
-
-env2=DSGet.new(args)
-env2.unsupported_file_types 
-
-
-
-env2=nil
+  end
+  # Itterate Hash to change relivent envelopes
 
 end
